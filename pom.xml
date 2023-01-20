@@ -91,7 +91,6 @@
 						<configuration>
 							<descriptors>
 								<descriptor>src/main/assembly/OntoQLConsoleAssemblyDIST.xml</descriptor>
-								<descriptor>src/main/assembly/OntoQLConsoleAssemblySRC.xml</descriptor>
 							</descriptors>
 						</configuration>
 					</execution>
@@ -99,23 +98,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>https://ci-lias.ensma.fr/job/OntoQLConsole/</url>
-	</ciManagement>
-	<scm>
-		<url>scm:git:https://git.lias-lab.fr/r/exploiting/ontoqlconsole.git</url>
-	</scm>
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>Internal Releases</name>
-			<url>http://s-nexus-lias.ensma.fr/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>Internal Snapshots</name>
-			<url>http://s-nexus-lias.ensma.fr/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
