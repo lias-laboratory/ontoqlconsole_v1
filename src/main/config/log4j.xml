@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="ontoql-file-appender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="../logs/ontoql.log" />
+        <param name="append" value="true" />
+        <param name="encoding" value="UTF-8" />
+        <param name="maxBackupIndex" value="15" />
+        <param name="maxFileSize" value="2000KB" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p %d{ISO8601} [%t][%x] %c - %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="ontoqlconsole-file-appender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="../logs/ontoqlconsole.log" />
+        <param name="append" value="true" />
+        <param name="encoding" value="UTF-8" />
+        <param name="maxBackupIndex" value="15" />
+        <param name="maxFileSize" value="2000KB" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p %d{ISO8601} [%t][%x] %c - %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="console-appender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.SimpleLayout" />
+    </appender>
+
+    <logger name="fr.ensma.lisi.ontoqlconsole">
+        <level value="debug" />
+        <appender-ref ref="ontoqlconsole-file-appender" />
+    </logger>
+
+    <logger name="fr.ensma.lisi.ontoql">
+        <level value="debug" />
+        <appender-ref ref="ontoql-file-appender" />
+    </logger>
+    
+    <root>
+        <priority value="debug" />
+        <appender-ref ref="console-appender" />
+    </root>
+
+</log4j:configuration>

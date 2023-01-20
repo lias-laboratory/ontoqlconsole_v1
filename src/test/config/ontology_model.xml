@@ -1,0 +1,531 @@
+<?xml version="1.0"?>
+<!DOCTYPE ontology_model [
+<!ELEMENT ontology_model (entity)*>
+	<!ATTLIST ontology_model package CDATA #IMPLIED>
+	
+<!ELEMENT entity (attributePrimitive|attributeRef|attributeCollection|link)*>
+	<!ATTLIST entity name CDATA #IMPLIED>     
+	<!ATTLIST entity nameFR CDATA #IMPLIED>                      
+	<!ATTLIST entity superEntity CDATA #IMPLIED>   	
+	<!ATTLIST entity entityPLIB CDATA #IMPLIED>	<!-- corresponding Plib entity -->						
+
+<!ELEMENT attributePrimitive EMPTY>
+    <!ATTLIST attributePrimitive name CDATA #IMPLIED>
+    <!ATTLIST attributePrimitive nameFR CDATA #IMPLIED>    
+    <!ATTLIST attributePrimitive type CDATA #IMPLIED>
+    <!ATTLIST attributePrimitive optional CDATA #IMPLIED> <!-- true if this attribute is mandatory -->  
+    <!ATTLIST attributePrimitive attributePLIB CDATA #IMPLIED> <!-- corresponding Plib attribute -->	
+    <!ATTLIST attributePrimitive entityDefPLIB CDATA #IMPLIED> <!-- domain of the plib attribute if it is a superclass of the plib entity corresponding to this entity -->	
+    <!ATTLIST attributePrimitive entityPLIB CDATA #IMPLIED> <!-- domain of the plib attribute if it is another plib entity -->
+    <!ATTLIST attributePrimitive label CDATA #IMPLIED> <!-- true if this attribute is a label -->
+    <!ATTLIST attributePrimitive multilingual CDATA #IMPLIED> <!-- true if this attribute is multilingual -->
+ 
+ <!ELEMENT attributeRef EMPTY>
+    <!ATTLIST attributeRef name CDATA #IMPLIED>
+    <!ATTLIST attributeRef nameFR CDATA #IMPLIED>  
+    <!ATTLIST attributeRef entity CDATA #IMPLIED> <!-- range of this attribute -->
+    <!ATTLIST attributeRef optional CDATA #IMPLIED> 
+    <!ATTLIST attributeRef attributePLIB CDATA #IMPLIED> <!-- attribute of the range of the association returned when this association is called -->
+    <!ATTLIST attributeRef entityPLIB CDATA #IMPLIED> <!-- domain of the plib attribute defining the association -->
+  	<!ATTLIST attributeRef entityDefPLIB CDATA #IMPLIED> <!-- domain of the plib association if it is a superclass of the plib entity corresponding to this entity -->	
+
+ <!ELEMENT attributeCollection EMPTY>
+    <!ATTLIST attributeCollection name CDATA #IMPLIED>  
+    <!ATTLIST attributeCollection nameFR CDATA #IMPLIED> 
+    <!ATTLIST attributeCollection type CDATA #IMPLIED> <!-- type of this collection: simple type (int, string ...) or association -->
+    <!ATTLIST attributeCollection entity CDATA #IMPLIED> <!-- entity of the association -->
+    <!ATTLIST attributeCollection attributePLIB CDATA #IMPLIED> <!-- corresponding plib attribute -->
+    <!ATTLIST attributeCollection entityDefPLIB CDATA #IMPLIED> <!-- domain of the plib collection if it is a superclass of the plib entity corresponding to this entity -->	
+    <!ATTLIST attributeCollection entityPLIB CDATA #IMPLIED> <!-- domain of the plib attribute defining the collection -->
+    <!ATTLIST attributeCollection function CDATA #IMPLIED> <!-- if this collection is derived, a function is called -->
+    
+<!ELEMENT link EMPTY> <!-- link between the correspondig plib entity of this entity and other plib entities -->
+    <!ATTLIST link withEntityPLIB CDATA #IMPLIED> <!-- the other plib entity -->
+    <!ATTLIST link attributePLIB CDATA #IMPLIED> <!-- the attribute plib defining the link between the two plib entity -->
+    <!ATTLIST link entityPLIB CDATA #IMPLIED> <!-- domain of the plib attribute defining the link -->
+    <!ATTLIST link entityDefPLIB CDATA #IMPLIED> <!-- domain of the plib attribute defining the link between the two plib entity -->                 
+]>
+        
+<ontology_model package="fr.ensma.lisi.ontoql.ontoapi">
+
+        <!-- =============================================== -->
+        <!--  Mapping of the core entities defined by OntoQL -->
+        <!-- =============================================== -->
+
+        <entity name="ontology" nameFR="ontologie" entityPLIB="supplier_element">        
+
+                <!-- ================================================= -->
+                <!--  Mapping of the core attributes defined by OntoQL -->
+                <!-- ================================================= -->
+                                
+                <link withEntityPLIB="supplier_bsu"
+                	attributePLIB="identified_by"/>                
+                
+                <attributePrimitive name="oid"
+                    type="Int" 
+                    attributePLIB="rid_bsu"/>
+                
+                <attributePrimitive name="namespace" nameFR="espaceDeNoms" 
+                   	type="String"
+                	attributePLIB="code"
+                	entityPLIB="supplier_bsu"/>
+
+                <!-- ============================================= -->
+                <!-- Mapping of others ontology model constructor  -->
+                <!-- provided by PLIB and implemented on OntoDB    -->
+                <!-- ============================================= -->
+
+        </entity>
+        
+        <entity name="concept" entityPLIB="class_and_property_elements">        
+                
+                <!-- ================================================= -->
+                <!--  Mapping of the core attributes defined by OntoQL -->
+                <!-- ================================================= -->
+                                
+                <link withEntityPLIB="basic_semantic_unit"
+                	attributePLIB="identified_by"
+                	entityDefPLIB="dictionary_element"/>
+                	
+                <link withEntityPLIB="item_names" 
+                	attributePLIB="names"/>            
+                
+                <attributePrimitive name="oid"
+                    type="Int" 
+                    attributePLIB="rid_bsu"/>
+                
+                <attributePrimitive name="code" 
+                   	type="String"
+                	attributePLIB="code"
+                	entityPLIB="basic_semantic_unit"/>
+
+                <attributePrimitive name="name" nameFR="nom"
+                    type="String"
+                	multilingual="true"
+                    label="true"
+                    entityPLIB="item_names"
+                    attributePLIB="preferred_name"/>
+                
+                <attributePrimitive name="definition" nameFR="définition"
+                    type="String"
+                	multilingual="true"
+                    label="false"
+                    optional="true"
+                    attributePLIB="definition"/>
+                    
+                <attributeCollection name="preferences" nameFR="préférences"
+                	type="ref"
+                    entity="Preference"/>
+                
+                <attributeCollection name="prefs" nameFR="prefs"
+                	type="ref"
+                    entity="Interpreted_Preference"/>
+
+                <!-- ============================================= -->
+                <!-- Mapping of others ontology model constructor  -->
+                <!-- provided by PLIB and implemented on OntoDB    -->
+                <!-- ============================================= -->
+
+                <link withEntityPLIB="dates"
+                	attributePLIB="time_stamps" 
+                	entityDefPLIB="dictionary_element"/>                                      
+                
+                <attributePrimitive name="version" 
+                   	type="String"
+                	attributePLIB="version"
+                	entityPLIB="basic_semantic_unit"/>
+
+              	<attributePrimitive name="revision" nameFR="révision"
+                   	type="String"
+                	attributePLIB="revision"/>
+
+                <attributePrimitive name="note"
+                    type="String"
+                    optional="true"
+                	multilingual="true"
+                    label="false"
+                    attributePLIB="note"/>
+                
+                <attributePrimitive name="remark" nameFR="remarque"
+                    type="String"
+                    optional="true"
+                	multilingual="true"
+                    label="false"
+                    attributePLIB="remark"/>
+
+                <attributePrimitive name="dateOfCurrentVersion" nameFR="dateVersionCourante"
+                    type="String"
+                    optional="true"
+                    attributePLIB="date_of_current_version"
+                    entityPLIB="dates"/>
+                
+                 <attributePrimitive name="dateOfCurrentRevision" nameFR="dateRévisionCourante"
+                    type="String"
+                    optional="true"
+                    attributePLIB="date_of_current_revision"
+                    entityPLIB="dates"/>
+
+                 <attributePrimitive name="dateOfOriginalDefinition" nameFR="dateDéfinitionOriginale"
+                    type="String"
+                    optional="true"
+                    attributePLIB="date_of_original_definition"
+                    entityPLIB="dates"/>
+                                    
+                <attributePrimitive name="shortName" nameFR="nomCourt"
+                    type="String"
+                    optional="true"
+                	multilingual="true"
+                    label="true"
+                    entityPLIB="item_names"
+                    attributePLIB="short_name"/>       
+
+                <attributeRef name="docOfDefinition" nameFR="docDéfinition"
+                    entity="document"
+                    optional="true"
+                    attributePLIB="source_doc_of_definition"/>
+
+                <attributeRef name="icon" nameFR="icône"
+                    entity="graphics"
+                    optional="true"
+                    attributePLIB="icon"
+                    entityPLIB="item_names"/>
+                                                        	
+        </entity>
+   
+        <entity name="class" nameFR="classe" superEntity="concept" entityPLIB="class">
+ 
+                <!-- ================================================= -->
+                <!--  Mapping of the core attributes defined by OntoQL -->
+                <!-- ================================================= -->
+                               
+                <link withEntityPLIB="class_bsu"
+                	attributePLIB="identified_by"/>
+
+				<!-- the definition of some attributes are overloaded
+				to optimize the processing by querying the table
+				class_bsu rather than basic_semantic_unit -->
+				
+                <attributePrimitive name="code" 
+                   	type="String"
+                	attributePLIB="code"
+                	entityPLIB="class_bsu"/>					
+               	       
+                <attributeRef name="definedBy" nameFR="définiPar"
+                    entity="ontology"
+                    attributePLIB="defined_by"
+                    entityPLIB="class_bsu"/>
+                    
+                <attributeCollection name="properties" nameFR="propriétés"
+                	type="ref"
+                    entity="property"
+                    function="applicable_properties"/>
+                
+                <attributeCollection name="scopeProperties" nameFR="propriétésDéfinies"
+                	type="ref"
+                    entity="property"
+                    attributePLIB="described_by"/>
+
+                <attributeCollection name="usedProperties" nameFR="propriétésUtilisées"
+                	type="ref"
+                    entity="property"
+                    function="used_properties"/>
+                	
+                <attributeCollection name="directSuperclasses" nameFR="superClassesDirectes"
+                	type="ref"
+                    entity="class"
+                    function="direct_superclasses"/>
+                    
+                <attributeCollection name="superclasses" nameFR="superClasses"
+                	type="ref"
+                    entity="class"
+                    function="superclasses"/>
+               
+                <attributeCollection name="directSubclasses" nameFR="sousClassesDirectes"
+                	type="ref"
+                    entity="class"
+                    function="direct_subclasses"/>
+
+                <attributeCollection name="subclasses" nameFR="sousClasses"
+                	type="ref"
+                    entity="class"
+                    function="subclasses"/>
+
+                <!-- ============================================ -->
+                <!-- Mapping of others ontology model attributes  -->
+                <!-- provided by PLIB and implemented on OntoDB   -->
+                <!-- ============================================ -->
+
+                <attributePrimitive name="version" 
+                   	type="String"
+                	attributePLIB="version"
+                	entityPLIB="class_bsu"/>
+                                    	                    
+        </entity>
+        
+        <entity name="property" nameFR="propriété" superEntity="concept"  entityPLIB="property_det">
+
+                <!-- ================================================= -->
+                <!--  Mapping of the core attributes defined by OntoQL -->
+                <!-- ================================================= -->
+                           
+                <link withEntityPLIB="property_bsu"
+                	attributePLIB="identified_by"/>
+                
+                <link withEntityPLIB="class_bsu"
+                	  attributePLIB="name_scope"
+                	  entityPLIB="property_bsu"/>	
+                
+				<!-- the definition of some attributes are overloaded
+				to optimize the processing by querying the table
+				property_bsu rather than basic_semantic_unit -->
+				    
+                <attributePrimitive name="code" 
+                   	type="String"
+                	attributePLIB="code"
+                	entityPLIB="property_bsu"/>					
+                                  
+                <attributeRef name="scope" nameFR="domaine"
+                    entity="class"
+                    attributePLIB="name_scope"
+                    entityPLIB="property_bsu"/>
+                
+                 <attributeRef name="range" nameFR="codomaine"
+                    entity="datatype"
+                    attributePLIB="domain"/>
+
+                <attributeRef name="definedBy" nameFR="définiPar"
+                    entity="ontology"
+                    attributePLIB="defined_by"
+                    entityPLIB="class_bsu"/>
+                    
+                <!-- ============================================ -->
+                <!-- Mapping of others ontology model attributes  -->
+                <!-- provided by PLIB and implemented on OntoDB   -->
+                <!-- ==================================  ========== -->
+
+                <attributePrimitive name="version" 
+                   	type="String"
+                	attributePLIB="version"
+                	entityPLIB="property_bsu"/>
+                                	                	
+        </entity>
+
+        <entity name="datatype" nameFR="type" entityPLIB="data_type">        
+                <attributePrimitive name="oid"
+                    type="Int" 
+                    attributePLIB="rid"/>
+        </entity>
+        
+        <entity name="primitiveType" nameFR="typePrimitif" superEntity="datatype" entityPLIB="simple_type"/>
+        
+        <entity name="refType" nameFR="typeRéférence" superEntity="datatype" entityPLIB="class_instance_type">
+        	<attributeRef name="onClass"
+                entity="class"
+                attributePLIB="domain"/>
+        </entity>
+        
+        <entity name="collectionType" nameFR="typeCollection" superEntity="datatype" entityPLIB="entity_instance_type_for_aggregate">
+        	
+        	<link withEntityPLIB="aggregate_type"
+              	  attributePLIB="type_structure"/>	
+                	  
+        	<attributeRef name="ofDatatype"
+                entity="datatype"
+                attributePLIB="value_type"
+                entityPLIB="aggregate_type"/>
+                        	
+        </entity>
+        
+        <entity name="booleanType" nameFR="typeBooléen" superEntity="primitiveType" entityPLIB="boolean_type"/>
+        <entity name="numberType" nameFR="typeNumérique" superEntity="primitiveType" entityPLIB="number_type"/>
+        <entity name="stringType" nameFR="typeCaractères" superEntity="primitiveType" entityPLIB="string_type"/>
+        <entity name="intType" nameFR="typeEntier" superEntity="numberType" entityPLIB="int_type"/>
+        <entity name="realType" nameFR="typeRéel" superEntity="numberType" entityPLIB="real_type"/>
+        
+        <!-- =========================================== -->
+        <!-- Mapping of others ontology model entities   -->
+        <!-- provided by PLIB and implemented on OntoDB  -->
+        <!-- =========================================== -->
+        
+       <!-- A posteriori case-of -->
+       <entity name="MapProperty">
+	   		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+			<attributeRef name="source" entity="property"/>
+			<attributeRef name="mapTo" entity="property"/>
+		</entity>
+      
+	   <entity name="AposterioriCaseof" nameFR="CaseOFAPosteriori" entityPLIB="a_posteriori_case_of">
+	           	<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+	           	
+				<attributeRef name="source" nameFR="source"
+                    entity="class"
+                    attributePLIB="source"/>
+				
+				<attributeRef name="isCaseOf" nameFR="isCaseOF"
+                    entity="class"
+                    attributePLIB="is_case_of"/>
+                    
+                <attributeCollection name="correspondingProperties" nameFR="correspondingProperties"
+                	type="ref"
+                    entity="MapProperty"
+					attributePLIB="corresponding_properties"/>
+	   </entity>   
+        
+        <!-- Different kind of PLIB Property -->
+        <entity name="nonDependentProperty" nameFR="propriétéNonDépendante" superEntity="property" entityPLIB="non_dependent_p_det"/>
+        <entity name="contextProperty" nameFR="propriétéContexte" superEntity="property" entityPLIB="condition_det"/>       
+        <entity name="dependentProperty" nameFR="propriétéDépendante" superEntity="property" entityPLIB="dependent_p_det">                    
+        	<attributeCollection name="dependsOn" nameFR="dépendDe"
+        	                     type="ref"
+                                 entity="contextProperty"      
+                                 attributePLIB="depends_on"/>
+        </entity>    
+        
+        <!-- Documents PLIB -->
+        <entity name="document" entityPLIB="document">                    
+                <attributePrimitive name="oid"
+                    type="Int" 
+                    attributePLIB="rid"/>
+        </entity>    
+        
+        <!-- Graphics PLIB -->
+        <entity name="graphics" nameFR="graphique" entityPLIB="graphics">                    
+        	<attributePrimitive name="oid" type="Int" attributePLIB="rid"/> 
+		</entity>
+        
+        <entity name="intMeasureType" nameFR="typeEntierMesure" superEntity="intType" entityPLIB="int_measure_type"/>    
+        <entity name="realMeasureType" nameFR="typeRéelMesure" superEntity="realType" entityPLIB="real_measure_type"/>    
+        
+        <!-- ================================================== -->
+        <!-- Extension of OntoDB for preferences (Dilek)        -->
+        <!-- ================================================== -->    
+
+	<entity name="Preference">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="label" type="STRING"/>
+		<attributePrimitive name="min" type="INT"/>
+		<attributePrimitive name="max" type="INT"/>
+	</entity>
+
+	<entity name="Interpreted_Preference">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="code" type="INT"/>
+		<attributePrimitive name="name" type="STRING"/>
+		<attributePrimitive name="classification" type="STRING"/>
+	</entity>
+
+	<entity name="Interval_Interpreted_Preference" superEntity="Interpreted_Preference">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="min" type="INT"/>
+		<attributePrimitive name="max" type="INT"/>
+	</entity>
+
+	<entity name="Numeric_Interpreted_Preference" superEntity="Interpreted_Preference">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="number_value" type="INT"/>
+		<attributePrimitive name="order_relation" type="STRING"/>
+	</entity>
+
+	<entity name="Boolean_Interpreted_Preference" superEntity="Interpreted_Preference">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeCollection name="properties"
+			type="ref"
+			entity="property"/>
+	</entity>
+
+	<entity name="Enumerated_Interpreted_Preference" superEntity="Interpreted_Preference">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeCollection name="property_or_class_instance"
+			type="STRING"/>
+	</entity>
+
+        <!-- ================================================== -->
+        <!-- Extension of OntoDB for model annotation (Laura)   -->
+        <!-- ================================================== -->  
+   
+    <entity name="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="name" type="STRING"/>
+	</entity>
+
+	<entity name="DataClass" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeRef name="subtype_of" entity="DataClass"/>
+	</entity>
+
+	<entity name="DataAttribute" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeRef name="range" entity="datatype"/>
+		<attributePrimitive name="min" type="INT"/>
+		<attributePrimitive name="max" type="STRING"/>
+		<attributeRef name="scope" entity="DataClass"/>
+	</entity>
+
+	<entity name="DataAssociationEnd" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="aggregationType" type="STRING"/>
+		<attributePrimitive name="min" type="INT"/>
+		<attributePrimitive name="max" type="STRING"/>
+		<attributeRef name="type" entity="DataClass"/>
+	</entity>
+
+	<entity name="DataAssociation" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeRef name="connection1" entity="DataAssociationEnd"/>
+		<attributeRef name="connection2" entity="DataAssociationEnd"/>
+	</entity>
+
+	<entity name="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="name" type="STRING"/>
+	</entity>
+
+	<entity name="DataClass" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeRef name="subtype_of"	entity="DataClass"/>
+	</entity>
+
+	<entity name="DataAttribute" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeRef name="range" entity="datatype"/>
+		<attributePrimitive name="min" type="INT"/>
+		<attributePrimitive name="max" type="STRING"/>
+		<attributeRef name="scope" entity="DataClass"/>
+	</entity>
+
+	<entity name="DataAssociationEnd" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="aggregationType" type="STRING"/>
+		<attributePrimitive name="min" type="INT"/>
+		<attributePrimitive name="max" type="STRING"/>
+		<attributeRef name="type" entity="DataClass"/>
+	</entity>
+
+	<entity name="DataAssociation" superEntity="DataElement">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributeRef name="connection1" entity="DataAssociationEnd"/>
+		<attributeRef name="connection2" entity="DataAssociationEnd"/>
+	</entity>
+
+	<entity name="Annotation">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="name" type="STRING"/>
+		<attributeRef name="annotates" entity="DataElement"/>
+		<attributeRef name="isAnnotatedBy" entity="concept"/>
+		<attributeRef name="subtype_of"	entity="Annotation"/>
+	</entity>
+
+	<entity name="AnnotationProperty">
+		<attributePrimitive name="oid" type="Int" attributePLIB="rid"/>
+		<attributePrimitive name="label" type="STRING"/>
+		<attributeRef name="scope" entity="Annotation"/>
+		<attributeRef name="range" entity="primitiveType"/>
+	</entity>
+        
+        <!-- ================================================== -->
+        <!-- Mapping of others ontology model entities          -->
+        <!-- not defined by PLIB and not implemented on OntoDB  -->
+        <!-- ================================================== -->  
+
+
+</ontology_model>

@@ -1,0 +1,5 @@
+CREATE ENTITY #DataElement (
+  #name STRING
+) 
+;
+DROP ENTITY #DataElement;
