@@ -50,7 +50,7 @@ Details the license agreement of OntoQLPlus V1: [LICENCE](LICENCE)
 * Lines of Code: 234
 * Programming Languages: Java
 
-## Historic Contributors
+## Historic Contributors (core developers first followed by alphabetical order)
 
 * [Mickael BARON(core developer)](https://www.lias-lab.fr/members/mickaelbaron/)
 * [Yamine AIT-AMEUR](https://www.lias-lab.fr/members/yamineaitameur/)
