@@ -41,7 +41,7 @@ You need to specify the command paramters
 * 5 : Database name (example : template_ontodb_continous)
 * 6 : OntoQL filename (example : d:/test/sample.ontoql)
 
-## Software licence agreement
+## Software license agreement
 
 Details the license agreement of OntoQLPlus V1: [LICENSE](LICENSE)
 
